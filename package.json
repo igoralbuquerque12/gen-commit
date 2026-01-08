@@ -1,0 +1,29 @@
+{
+  "name": "gen-commit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "gen-commit": "./bin/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igoralbuquerque12/gen-commit.git"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igoralbuquerque12/gen-commit/issues"
+  },
+  "homepage": "https://github.com/igoralbuquerque12/gen-commit#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "chalk": "^5.6.2",
+    "dotenv": "^17.2.3"
+  }
+}
