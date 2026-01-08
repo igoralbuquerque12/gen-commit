@@ -15,5 +15,5 @@ switch (command) {
         await run(subCommand);
         break;
     default:
-        logger.warn('Uso: gen-commit init | run');
+        logger.warn('Use: gen-commit init | run [template-file]');
 }
