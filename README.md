@@ -1,7 +1,7 @@
 # gen-commit 🚀
 
-> **Seu Arquiteto de Software via Linha de Comando.**  
-> Transforme alterações caóticas em um histórico de Git limpo, atômico e profissional usando IA (Gemini ou OpenAI).
+> **Sua CLI inteligente para gerar commits e Pull Requests profissionais.**  
+> Transforme alterações caóticas em um histórico Git limpo, atômico e revisável.
 
 [![npm version](https://img.shields.io/npm/v/gen-commit.svg?style=flat-square)](https://www.npmjs.com/package/gen-commit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
@@ -10,35 +10,42 @@
 
 ---
 
-## 🎯 O Que é o gen-commit?
+## 🎯 O que é o gen-commit?
 
-O **gen-commit** não é apenas um gerador de mensagens de commit.  
-Ele é uma **CLI (Command Line Interface)** inteligente que atua como um **Arquiteto de Software sênior** diretamente no seu terminal.
+O **gen-commit** é uma **CLI (Command Line Interface)** que atua como um **Arquiteto de Software** diretamente no seu terminal.
 
-Quando você codifica o dia todo e termina com dezenas de arquivos modificados (Backend, Frontend, Banco de Dados e Configurações), o `gen-commit`:
+Após um dia inteiro codando — com mudanças espalhadas entre backend, frontend, banco de dados, migrations e configurações — o `gen-commit`:
 
-1. Analisa profundamente o `git diff` de todas as mudanças.
-2. Entende a **ordem de dependência técnica**  
-   (ex.: o banco de dados precisa existir antes da API; a API antes do Frontend).
-3. Gera um **Plano de Execução** com commits **atômicos e semânticos**.
-4. Divide mudanças complexas em **múltiplas branches**, se necessário.
-5. Cria **descrições de Pull Requests** seguindo exatamente o template da sua empresa.
+1. Analisa todas as alterações do repositório.
+2. Identifica **dependências técnicas reais**  
+   (ex.: banco → API → frontend).
+3. Gera um **plano de commits atômicos e semânticos**.
+4. Opcionalmente separa mudanças em **múltiplas branches**.
+5. Produz **descrições de Pull Requests** alinhadas ao padrão da sua equipe.
 
 **Resultado:**  
-Um histórico de Git que conta uma história clara, facilita Code Reviews e permite **reverts seguros**.
+Um histórico Git legível, code reviews objetivos e **reverts seguros**.
+
+### Por que usar o gen-commit em vez de agentes de IDE?
+
+- Mais estruturado que sugestões isoladas (ex.: Copilot).
+- Consome **menos tokens** do que IDEs com agentes persistentes.
+- Zero alucinação: contexto padronizado e controlado.
+- Fluxo explícito, previsível e auditável.
+- Gratuito e simples de testar.
 
 ---
 
 ## 🆚 Antes vs. Depois
 
-| O Jeito "Preguiçoso" | O Jeito gen-commit |
-|---------------------|-------------------|
-| `git commit -m "fiz o cadastro e arrumei bugs"` | **Commit 1:** `chore(deps): install prisma`  \
-| | **Commit 2:** `feat(db): add user schema` \
-| | **Commit 3:** `feat(api): implement auth controller` \
+| Abordagem comum | Com gen-commit |
+|----------------|---------------|
+| `git commit -m "fiz o cadastro e arrumei bugs"` | **Commit 1:** `chore(deps): install prisma` |
+| | **Commit 2:** `feat(db): add user schema` |
+| | **Commit 3:** `feat(api): implement auth controller` |
 | | **Commit 4:** `feat(ui): create login form` |
-| ❌ Impossível reverter só o CSS sem quebrar o banco | ✅ Commits **atômicos e reversíveis** |
-| ❌ Code Review caótico | ✅ Review **passo-a-passo** |
+| ❌ Reverter uma parte quebra o resto | ✅ Commits **atômicos e reversíveis** |
+| ❌ Code review confuso | ✅ Review **passo a passo** |
 
 ---
 
@@ -46,7 +53,7 @@ Um histórico de Git que conta uma história clara, facilita Code Reviews e perm
 
 ### 1. Instalação
 
-Use diretamente via `npx` ou instale globalmente:
+Via `npx` ou instalação global:
 
 ```bash
 npm install -g gen-commit
@@ -54,136 +61,122 @@ npm install -g gen-commit
 
 ### 2. Inicialização
 
-Na raiz do seu projeto:
+Na raiz do projeto:
 
 ```bash
 gen-commit init
 ```
 
-Isso criará automaticamente:
+Arquivos gerados:
 
-- `gen-commit.config.json` → Preferências de IA e templates  
-- `.env` → Chaves de API  
-- `gen-commit/entry` → Onde você descreve brevemente o que fez
+- `gen-commit.config.json` → Preferências e templates  
+- `.env` → Chave da IA  
+- `gen-commit/entry` → Descrição do trabalho realizado
 
-### 3. Configuração da IA 
+### 3. Configuração da IA
 
-Independe da sua escolha de provedor, coloque sua respectiva chave na sua `.env`.
+1. Abra o `.env`:
+   ```env
+   GEN_COMMIT_AI_API_KEY=sk-sua-chave-aqui
+   ```
 
-1.  Abra o arquivo `.env` gerado na raiz.
-2.  Cole sua chave de API na variável `GEN_COMMIT_AI_API_KEY`:
-    ```env
-    GEN_COMMIT_AI_API_KEY=sk-sua-chave-aqui
-    ```
-3.  Abra o arquivo `gen-commit.config.json` e informe qual provedor você está usando:
-    ```json
-    {
-      "aiProvider": "gemini || openai" 
-    }
-    ```
+2. Defina o provedor em `gen-commit.config.json`:
+   ```json
+   {
+     "aiProvider": "gemini | openai"
+   }
+   ```
 
 **Onde pegar sua chave?**
 * **Google Gemini (Grátis/Recomendado):** [Google AI Studio](https://aistudio.google.com/app/apikey)
 * **OpenAI (ChatGPT):** [OpenAI Platform](https://platform.openai.com/api-keys)
 
+---
+
 ## 🚀 Como Usar
 
-Fluxo simples: **Descreva → Planeje → Execute**
+Fluxo padrão: **Descreva → Planeje → Execute**
 
-### Passo 1: Descreva e Estruture a Estratégia
-Edite o arquivo `gen-commit/entry/example.json`. Aqui você define o que fez e como quer separar o código.
+### Passo 1: Descreva o Trabalho
 
-**Definindo as Branches:**
-Você decide a granularidade. No campo `branches`, adicione um objeto para cada branch que deseja criar.
-* **branchName**: O nome técnico da branch (ex: `feat/backend`).
-* **description**: A instrução para a IA. Explique **o que deve entrar nessa branch**. A IA lerá isso e moverá os arquivos corretos para ela automaticamente.
+Edite `gen-commit/entry/example.json` e descreva:
 
-Exemplo de configuração para separar Back e Front:
+- O que foi feito
+- Como separar por branches
 
-```bash
+Exemplo:
+
+```json
 {
+  "exitName": "plan-NOS-120",
   "userSummary": [
-    "Implementei autenticação completa com JWT",
-    "Criei formulários de Login e Cadastro"
+    "Implementei autenticação com JWT",
+    "Criei telas de login e cadastro"
   ],
   "branches": [
     {
       "branchName": "feat/auth-core",
-      "description": "Infraestrutura, Banco de Dados e Lógica de Backend (API)"
+      "description": "Infraestrutura, banco e API"
     },
     {
       "branchName": "feat/auth-ui",
-      "description": "Interfaces visuais (React), componentes de formulário e CSS"
+      "description": "Componentes React e estilos"
     }
   ]
 }
 ```
 
-### Passo 2: Gere o Plano
+### Passo 2: Gerar o Plano
 
 ```bash
 gen-commit run example.json
 ```
 
-### Passo 3: Execute o Plano
+### Passo 3: Executar
 
-O gen-commit irá gerar um arquivo Markdown em:
+O plano será gerado em:
 
 ```
-gen-commit/exit/plan-123.md
+gen-commit/exit/plan-NOS-120.md
 ```
 
-1. Abra o arquivo gerado
-2. Revise o plano (a IA ajuda, você decide)
-3. Copie o script Bash e execute no terminal
+1. Revise o plano
+2. Copie o script Bash
+3. Execute no terminal
 
-✨ **Pronto!** Seu trabalho de horas vira commits profissionais em segundos.
+Seu trabalho vira commits profissionais em segundos.
 
 ---
 
-## 💻 Área do Desenvolvedor (Contribuindo)
+## 💻 Área do Desenvolvedor
 
-Contribuições são muito bem-vindas!  
-Este projeto é ideal para estudar:
+Projeto ideal para estudar:
 
-- Engenharia de Prompt
-- Manipulação de AST e Git
-- Arquitetura de CLIs profissionais
+- Arquitetura de CLIs
+- Engenharia de prompt
+- Manipulação de Git
+- Organização de commits
 
 ### Rodando Localmente
-
-Clone o repositório:
 
 ```bash
 git clone https://github.com/seu-usuario/gen-commit.git
 cd gen-commit
-```
-
-Instale as dependências:
-
-```bash
 npm install
-```
-
-Crie o link simbólico (essencial):
-
-```bash
 npm link
 ```
 
-Agora qualquer alteração no código reflete instantaneamente no comando `gen-commit` global.
-
-### Estrutura do Projeto
+### Estrutura
 
 ```
-src/commands   → comandos CLI (init, run)
-src/services   → Git, Gemini e OpenAI
-src/constants  → prompts do sistema (a alma da IA)
+src/commands   → comandos CLI
+src/services   → Git, Gemini, OpenAI
+src/constants  → prompts
+src/utils      → utilitários e logs
 ```
 
 ---
 
 ## 📄 Licença
 
-Este projeto está sob a licença **MIT**.  
-Use, modifique e distribua livremente.
+Licença **MIT** — use, modifique e distribua livremente.
