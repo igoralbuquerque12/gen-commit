@@ -1,6 +1,6 @@
 {
   "name": "gen-commit",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "",
   "main": "bin/cli.js",
   "scripts": {
