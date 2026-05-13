@@ -86,7 +86,10 @@ vibe-git/              → Internal workspace (auto-added to .gitignore)
 Open the generated `.env` file and add your credentials:
 
 ```env
-# Choose your preferred provider
+# Concentrate any provider key here
+VIBE_GIT_AI_API_KEY=sk-groq/gemini/openai-key
+
+# Or use the provider's key directly
 GEMINI_API_KEY=sk-your-key-here
 OPENAI_API_KEY=sk-your-key-here
 GROQ_API_KEY=sk-your-key-here
